@@ -1,26 +1,33 @@
 <template>
+  <!-- Форма за добавяне на нова задача -->
   <form @submit.prevent="submitForm" class="add-task-form">
-    <input 
-      v-model="taskName" 
-      type="text" 
-      placeholder="Task Name" 
-      required 
+    <!-- Поле за въвеждане на името на задачата -->
+    <input
+        v-model="taskName"
+        type="text"
+        placeholder="Task Name"
+        required
     />
+    <!-- Бутон за потвърждаване на добавянето -->
     <button type="submit">Add Task</button>
   </form>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue' // Импортиране на ref за реактивни променливи
 
+// Реактивна променлива за съхраняване на името на задачата
 const taskName = ref('')
 
-
+// Емисия за предаване на събития към родителя
 const emit = defineEmits()
 
+// Функция за обработка на изпращането на формата
 function submitForm() {
   if (taskName.value.trim() !== '') {
+    // Емисия на събитие 'add-task' към родителя с данни за новата задача
     emit('add-task', { id: Date.now(), name: taskName.value, completed: false })
+    // Изчистване на полето за въвеждане
     taskName.value = ''
   }
 }
